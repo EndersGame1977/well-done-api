@@ -12,16 +12,16 @@
     "knex": "^0.19.2",
     "pg": "^7.12.1",
     "sqlite3": "^4.1.0"
-  },  
+  },
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js"
   },
-  "name": "name-of-your-api",
+  "name": "well-done-api",
   "version": "1.0.1",
-  "description": "Here you can put a detailed description of your api",
+  "description": "Take data from exsisting api, stores it in postgres and talks with front-end.",
   "main": "index.js",
-  "repository": "https://github.com/fixmylife-boilerplates/fixmylife-node-api.git",
-  "author": "fixmylifedesigns <contact@duranirving.com>",
+  "repository": "https://github.com/EndersGame1977/well-done-api",
+  "author": "Jason Prince <jasoncprince@gmail.com>",
   "license": "MIT"
 }

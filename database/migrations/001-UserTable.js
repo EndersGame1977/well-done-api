@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-  return knex.schema.createTable("users", tbl => {
+  return knex.schema.createTable("UserTable", tbl => {
     tbl.increments();
 
     tbl
@@ -14,12 +14,17 @@ exports.up = function(knex) {
       .notNullable()
       .unique();
 
-    tbl.string("avatar");
+    tbl
+      .string("sms", 128)
+      .notNullable()
+      .unique();
 
+    tbl.boolean("isAdmin");
+    tbl.string("organization", 128);
     tbl.timestamps(true, true);
   });
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists("users");
+  return knex.schema.dropTableIfExists("UserTable");
 };
