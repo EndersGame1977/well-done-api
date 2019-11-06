@@ -9,16 +9,14 @@ exports.up = function(knex) {
       .references("id")
       .inTable("PumpTable")
       .onDelete("CASCADE")
-      .onUpdate("CASCADE")
-      .notNullable();
+      .onUpdate("CASCADE");
 
     tbl
       .integer("userFK")
       .references("id")
       .inTable("UserTable")
       .onDelete("CASCADE")
-      .onUpdate("CASCADE")
-      .notNullable();
+      .onUpdate("CASCADE");
   });
 };
 

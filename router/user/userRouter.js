@@ -1,14 +1,14 @@
 const router = require("express").Router();
 
-const Users = require("./usersModel");
+const Users = require("./userModel");
 const Posts = require("../posts/postsModel");
 const restricted = require("../auth/middleware/restrictedMiddleware");
 const { verifyUserExist } = require("./middleware");
 
 router.get("/all", (req, res) => {
-  Users.getUsers()
-    .then(users => {
-      res.status(200).json(users);
+  Users.getUser()
+    .then(user => {
+      res.status(200).json(user);
     })
     .catch(err => {
       res
@@ -106,20 +106,18 @@ router.delete("/:id", restricted, (req, res) => {
 });
 
 router.delete("/", restricted, (req, res) => {
-    Users.remove(req.decodedToken.id)
-      .then(del => {
-        res
-          .status(200)
-          .json({
-            message: `User was successfully deleted`
-          })
-          .end(del);
-      })
-      .catch(err => {
-        res.status(500).json({ err, message: "error, unable to delete user" });
-      });
-  
-  
+  Users.remove(req.decodedToken.id)
+    .then(del => {
+      res
+        .status(200)
+        .json({
+          message: `User was successfully deleted`
+        })
+        .end(del);
+    })
+    .catch(err => {
+      res.status(500).json({ err, message: "error, unable to delete user" });
+    });
 });
 
 module.exports = router;

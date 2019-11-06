@@ -1,25 +1,34 @@
 const db = require("../../database/dbConfig");
 
 module.exports = {
-  getUsers,
+  getUser,
   findById,
   update,
   remove
 };
 
-function getUsers() {
-  return db("users");
+function getUser() {
+  return db("UserTable");
 }
 
 function findById(id) {
-  return db("users")
+  return db("UserTable")
     .where({ id })
     .first()
-    .select("id", "username", "email", "avatar", "created_at", "updated_at");
+    .select(
+      "id",
+      "username",
+      "email",
+      "organization",
+      "sms",
+      "isAdmin",
+      "created_at",
+      "updated_at"
+    );
 }
 
 function update(id, changes) {
-  return db("users")
+  return db("UserTable")
     .where({ id })
     .update(changes)
     .then(count => {
@@ -32,9 +41,7 @@ function update(id, changes) {
 }
 
 function remove(id) {
-  return db("users")
+  return db("UserTable")
     .where({ id })
     .del();
 }
-
-

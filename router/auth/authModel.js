@@ -9,28 +9,35 @@ module.exports = {
 };
 
 function find() {
-  return db("users").select("id", "username", "password");
+  return db("UserTable").select(
+    "id",
+    "username",
+    "password",
+    "email",
+    "sms",
+    "isAdmin",
+    "organization"
+  );
 }
 
 function findBy(filter) {
-  return db("users").where(filter);
+  return db("UserTable").where(filter);
 }
 
 async function add(user) {
-  const [id] = await db("users").insert(user, "id");
+  const [id] = await db("UserTable").insert(user, "id");
 
   return findById(id);
 }
 
-
 function findById(id) {
-  return db("users")
+  return db("UserTable")
     .where({ id })
     .first();
 }
 
 function findByEmail(email) {
-  return db("users")
+  return db("UserTable")
     .where({ email })
     .first();
 }

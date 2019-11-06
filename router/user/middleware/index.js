@@ -1,4 +1,4 @@
-const Users = require("../usersModel");
+const Users = require("../userModel");
 const Auth = require("../../auth/authModel");
 const generateToken = require("../../../token/token");
 
@@ -26,9 +26,6 @@ function checkIfUserExist(req, res, next) {
         } else {
           registeruser.username =
             req.body.username || req.body.email.replace(/@.*/, "");
-          registeruser.avatar =
-            req.body.avatar ||
-            "https://github.com/brokenulock/frontend/blob/master/src/bulfmlimg/default-avatar.png?raw=true";
           Auth.add(registeruser)
             .then(newUser => {
               const token = generateToken(newUser);
