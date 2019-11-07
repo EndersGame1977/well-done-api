@@ -1,13 +1,17 @@
 exports.up = function(knex) {
   return knex.schema.createTable("DateTable", tbl => {
-    tbl.increments();
+    tbl.increments().primary();
+    tbl.integer("sensor_pid");
     tbl.date("date");
-    tbl
-      .integer("PumpTableFK")
-      .references("id")
-      .inTable("PumpTable")
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE");
+    tbl.integer("count"), tbl.integer("total"), tbl.integer("pad_second_one");
+    tbl.integer("pad_second_two");
+    tbl.integer("pad_second_three");
+    tbl.integer("pad_second_four");
+    tbl.integer("pad_count_one");
+    tbl.integer("pad_count_two");
+    tbl.integer("pad_count_three");
+    tbl.integer("pad_count_four");
+    tbl.float("percent"), tbl.integer("status"), tbl.timestamps(false, true);
   });
 };
 

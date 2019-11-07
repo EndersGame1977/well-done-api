@@ -1,0 +1,44 @@
+{
+  "status": 0,
+  "reportCount": 387,
+  "reportedSeconds": 116100,
+  "reportedPercent": 0.09598214285714286,
+  "totalSeconds": 1209600,
+  "unreportedSeconds": 1093500,
+  "padCounts": [0, 0, 0, 0],
+  "padSeconds": [0, 0, 0, 0],
+  "dates": [
+    "Wed Oct 23 2019",
+    "Thu Oct 24 2019",
+    "Fri Oct 25 2019",
+    "Sat Oct 26 2019",
+    "Sun Oct 27 2019",
+    "Mon Oct 28 2019",
+    "Tue Oct 29 2019",
+    "Wed Oct 30 2019",
+    "Thu Oct 31 2019",
+    "Fri Nov 01 2019",
+    "Sat Nov 02 2019",
+    "Sun Nov 03 2019",
+    "Mon Nov 04 2019",
+    "Tue Nov 05 2019"
+  ],
+  "statuses": [
+    {
+      "count": 287,
+      "total": 0,
+      "padSeconds": [Array],
+      "padCounts": [Array],
+      "reportedPercent": 0.9965277777777778,
+      "status": 0
+    },
+    {
+      "count": 100,
+      "total": 0,
+      "padSeconds": [Array],
+      "padCounts": [Array],
+      "reportedPercent": 0.3472222222222222,
+      "status": 0
+    }
+  ]
+}

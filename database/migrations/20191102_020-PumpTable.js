@@ -1,12 +1,13 @@
 exports.up = function(knex) {
   return knex.schema.createTable("PumpTable", tbl => {
-    tbl.string("id").primary();
-    tbl.integer("sensor");
+    tbl.string("pump_uid").primary();
+    tbl.integer("sensor_pid");
+    tbl.string("site_uid");
     tbl.date("constructed");
     tbl.integer("depth");
     tbl.integer("yield");
     tbl.integer("static");
-    tbl.integer("levelDynamic");
+    tbl.integer("level_dynamic");
     tbl.float("latitude");
     tbl.float("longitude");
     tbl.timestamps(false, true);

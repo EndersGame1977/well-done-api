@@ -1,20 +1,20 @@
 exports.up = function(knex) {
   return knex.schema.createTable("StatusTable", tbl => {
-    tbl.increments().primary;
-    tbl.integer("sensor");
-    tbl.date("date");
+    tbl.integer("sensor_pid").primary();
     tbl.integer("status");
     tbl.integer("count");
-    tbl.integer("total");
+    tbl.integer("second");
     tbl.float("percent");
-    tbl.integer("padSecondOne");
-    tbl.integer("padSecondTwo");
-    tbl.integer("padSecondThree");
-    tbl.integer("padSecondFour");
-    tbl.integer("padCountOne");
-    tbl.integer("padCountTwo");
-    tbl.integer("padCountThree");
-    tbl.integer("padCountFour");
+    tbl.integer("total_second");
+    tbl.integer("unreported_second");
+    tbl.integer("pad_second_one");
+    tbl.integer("pad_second_two");
+    tbl.integer("pad_second_three");
+    tbl.integer("pad_second_four");
+    tbl.integer("pad_count_one");
+    tbl.integer("pad_count_two");
+    tbl.integer("pad_count_three");
+    tbl.integer("pad_count_four");
     tbl.timestamps(false, true);
   });
 };
