@@ -1,69 +1,74 @@
 const router = require("express").Router();
-const PumpModel = require("./pumpModel");
+const db = require("../../database/dbConfig");
 
 //* Gets all pumps
 router.get("/", (req, res) => {
-  PumpModel.getPump()
-    .then(pump => {
-      res.status(200).json(pump);
-    })
-    .catch(error => {
-      res
-        .status(500)
-        .json({ req, error, message: "error retrieving all pumps" });
-    });
+  try {
+    db.select()
+      .from("PumpTable")
+      .then(data => {
+        res.send(data);
+      });
+  } catch (error) {
+    console.log({ message: error.message });
+  }
 });
 
 //* Gets one pump
-router.get("/:id", (req, res) => {
-  PumpModel.findPumpById(req.params.id)
-    .then(pump => {
-      res.status(200).json(pump);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ err, message: "we ran into an error retreving the pump" });
-    });
+router.get("/:sensor_pid", (req, res) => {
+  try {
+    db("PumpTable")
+      .where({ sensor_pid: req.params.sensor_pid })
+      .returning("*")
+      .then(data => {
+        res.send(data);
+      });
+  } catch (error) {
+    console.log({ message: error.message });
+  }
 });
 
 //* Create pump
 router.post("/", (req, res) => {
-  const pump = req.body;
-  PumpModel.addPump(pump)
-    .then(inserted => {
-      res.status(201).json(inserted);
-    })
-    .catch(error => {
-      res
-        .status(500)
-        .json({ error, message: "we ran into an error posting your tab" });
-    });
+  try {
+    db.insert(req.body)
+      .returning("*")
+      .into("PumpTable")
+      .then(data => {
+        res.send(data);
+      });
+  } catch (error) {
+    console.log({ message: error.message });
+  }
 });
 
 //* Update pump
-router.put("/:id", (req, res) => {
-  PumpModel.updatePump(req.params.id, req.body)
-    .then(update => {
-      res.status(201).json(update);
-    })
-    .catch(err => {
-      res.status(500).json({ err, message: "error updating your pump" });
-    });
+router.patch("/:sensor_pid", (req, res) => {
+  try {
+    db("PumpTable")
+      .where({ sensor_pid: req.params.sensor_pid })
+      .update(req.body)
+      .returning("*")
+      .then(data => {
+        res.json(data);
+      });
+  } catch (error) {
+    console.log({ message: error.message });
+  }
 });
 
 //* Delete pump
-router.delete("/:id", (req, res) => {
-  PumpModel.removePump(req.params.id)
-    .then(del => {
-      res
-        .status(200)
-        .json({ message: "the pump has successfully been deleted" })
-        .end(del);
-    })
-    .catch(err => {
-      res.status(500).json({ err, message: "this pump does not exist" });
-    });
+router.delete("/:sensor_pid", (req, res) => {
+  try {
+    db("PumpTable")
+      .where({ sensor_pid: req.params.sensor_pid })
+      .del()
+      .then(() => {
+        res.json({ success: true });
+      });
+  } catch (error) {
+    console.log({ message: error.message });
+  }
 });
 
 module.exports = router;
