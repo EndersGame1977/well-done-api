@@ -4,8 +4,11 @@ const db = require("../../database/dbConfig");
 //* Gets all pumps
 router.get("/", (req, res) => {
   try {
-    db.select()
-      .from("PumpTable")
+    db("PumpTable as pt")
+      .join("StatusTable", "StatusTable.pid_sensor", "pt.sensor_pid")
+      .join("SiteTable as st", "st.site_uid", "pt.site_uid")
+      //.join("OrganizationTable as ot, ot.id", "pt.Organization_id")
+      .select()
       .then(data => {
         res.send(data);
       });
@@ -14,11 +17,19 @@ router.get("/", (req, res) => {
   }
 });
 
+// [METHOD] GET
+// [ROUTE] /pump/:id
+// [DESCRIPTION] To retrieve a pump using the sensor_pid
+// [TABLE] PumpTable, SiteTable, StatusTable, OrganizationTable
 //* Gets one pump
-router.get("/:sensor_pid", (req, res) => {
+router.get("/:id", (req, res) => {
   try {
-    db("PumpTable")
-      .where({ sensor_pid: req.params.sensor_pid })
+    db("PumpTable as pt")
+      .where({ sensor_pid: req.params.id })
+      .join("StatusTable", "StatusTable.pid_sensor", "pt.sensor_pid")
+      .join("SiteTable as st", "st.site_uid", "pt.site_uid")
+      //.join("OrganizationTable as ot, ot.id", "pt.Organization_id")
+      .select()
       .returning("*")
       .then(data => {
         res.send(data);

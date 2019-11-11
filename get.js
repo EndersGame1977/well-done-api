@@ -160,7 +160,7 @@ function addPumpSeed(PumpSeed) {
 const status = function(response, pid_sensor) {
   //for (let i = 0; i < response.length; i++) {
   let StatusSeed = {
-    sensor_pid: pid_sensor,
+    pid_sensor: pid_sensor,
     //date: response.dates[i],
     status: response.status,
     count: response.reportCount,

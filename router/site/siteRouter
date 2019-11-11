@@ -1,0 +1,93 @@
+
+
+
+//********OrganizationTable********//
+// [METHOD] GET 
+// To retrieve a list of organizations.
+//   With PumpTable
+// [ROUTE] /organization
+
+// [METHOD] GET
+// To retrieve a organization.
+//   With PumpTable
+// [ROUTE] /organization/:id
+
+// [METHOD] POST
+// To create a new organization.
+// [ROUTE] /organization
+
+// [METHOD] PATCH
+// To modify an existing organization.
+// [ROUTE] /organization/:id
+
+// [METHOD] DELETE 
+// To remove a organization
+// [ROUTE] /organization/:id
+
+
+//********OrganizationRouter********//
+// [METHOD] GET
+// [ROUTE] /organization
+// [DESCRIPTION] To retrieve a list of organizations.
+// [TABLE] OrganizationTable
+
+// [METHOD] GET
+// [ROUTE] /organization/:id
+// [DESCRIPTION] To retrieve a organizations.
+// [TABLE] OrganizationTable
+
+// [METHOD] GET
+// [ROUTE] /organization/:id/pump
+// [DESCRIPTION] To retrieve a list of pumps for an organization.
+// [TABLE] PumpTable, OrganizationTable
+
+// [METHOD] POST
+// [ROUTE] /organization
+// [DESCRIPTION] To create a new organization.
+// [TABLE] OrganizationTable
+
+// [METHOD] PATCH
+// [ROUTE] /organization/:id
+// [DESCRIPTION] To modify an existing organization.
+// [TABLE] OrganizationTable
+
+// [METHOD] DELETE 
+// [ROUTE] /organization/:id
+// [DESCRIPTION] To remove a organization.
+// [TABLE] OrganizationTable
+
+//********PumpRouter********//
+// [METHOD] GET 
+// [ROUTE] /pump
+// [DESCRIPTION] To retrieve a list of pumps.
+// [TABLE] PumpTable, SiteTable, StatusTable, OrganizationTable
+
+// [METHOD] GET
+// [ROUTE] /pump/:id
+// [DESCRIPTION] To retrieve a pump.
+// [TABLE]
+//   PumpTable
+//   SiteTable
+//   StatusTable
+//   OrganizationTable
+
+// [METHOD] GET
+// [ROUTE] /pump/:id/date
+// [DESCRIPTION] To retrieve a pump with dates.
+// [TABLE]
+//   PumpTable
+//   SiteTable
+//   DateTable
+//   OrganizationTable
+
+// [METHOD] POST
+// [DESCRIPTION] To create a new pump.
+// [ROUTE] /pump
+
+// [METHOD] PATCH
+// [ROUTE] /pump/:id
+// [DESCRIPTION] To modify an existing pump.
+
+// [METHOD] DELETE 
+// [ROUTE] /pump/:id
+// [DESCRIPTION] To remove a pump.

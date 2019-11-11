@@ -1,6 +1,6 @@
 exports.up = function(knex) {
   return knex.schema.createTable("StatusTable", tbl => {
-    tbl.integer("sensor_pid").primary();
+    tbl.integer("pid_sensor").primary();
     tbl.integer("status");
     tbl.integer("count");
     tbl.integer("second");

@@ -10,6 +10,7 @@ exports.up = function(knex) {
     tbl.integer("level_dynamic");
     tbl.float("latitude");
     tbl.float("longitude");
+    tbl.integer("organization_id");
     tbl.timestamps(false, true);
   });
 };
