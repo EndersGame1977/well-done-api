@@ -202,7 +202,7 @@ function addStatusSeed(StatusSeed) {
 const day = function(response, date, pid_sensor) {
   console.log(response.count);
   let DaySeed = {
-    sensor_pid: pid_sensor,
+    pid_sensor: pid_sensor,
     date: date,
     count: response.count,
     total: response.total,

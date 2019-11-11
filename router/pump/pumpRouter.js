@@ -1,7 +1,12 @@
 const router = require("express").Router();
 const db = require("../../database/dbConfig");
 
-//* Gets all pumps
+//* [BASE ROUTE] /api/pump
+
+//* [METHOD] GET
+//* [ROUTE] /
+//* [DESCRIPTION] To retrieve a list of pumps.
+//* [TABLE] PumpTable, SiteTable, StatusTable, OrganizationTable
 router.get("/", (req, res) => {
   try {
     db("PumpTable as pt")
@@ -17,16 +22,37 @@ router.get("/", (req, res) => {
   }
 });
 
-// [METHOD] GET
-// [ROUTE] /pump/:id
-// [DESCRIPTION] To retrieve a pump using the sensor_pid
-// [TABLE] PumpTable, SiteTable, StatusTable, OrganizationTable
+//* [METHOD] GET
+//* [ROUTE] /:id
+//* [DESCRIPTION] To retrieve a pump using the sensor_pid
+//* [TABLE] PumpTable, SiteTable, StatusTable, OrganizationTable
 //* Gets one pump
 router.get("/:id", (req, res) => {
   try {
     db("PumpTable as pt")
       .where({ sensor_pid: req.params.id })
       .join("StatusTable", "StatusTable.pid_sensor", "pt.sensor_pid")
+      .join("SiteTable as st", "st.site_uid", "pt.site_uid")
+      //.join("OrganizationTable as ot, ot.id", "pt.Organization_id")
+      .select()
+      .returning("*")
+      .then(data => {
+        res.send(data);
+      });
+  } catch (error) {
+    console.log({ message: error.message });
+  }
+});
+
+//* [METHOD] GET
+//* [ROUTE] /:id/date
+//* [DESCRIPTION] To retrieve a pump with dates.
+//* [TABLE] PumpTable, SiteTable, DateTable, OrganizationTable
+router.get("/:id/date", (req, res) => {
+  try {
+    db("PumpTable as pt")
+      .where({ sensor_pid: req.params.id })
+      .join("DateTable as dt", "dt.pid_sensor", "pt.sensor_pid")
       .join("SiteTable as st", "st.site_uid", "pt.site_uid")
       //.join("OrganizationTable as ot, ot.id", "pt.Organization_id")
       .select()

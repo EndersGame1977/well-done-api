@@ -1,7 +1,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable("DateTable", tbl => {
     tbl.increments().primary();
-    tbl.integer("sensor_pid");
+    tbl.integer("pid_sensor");
     tbl.date("date");
     tbl.integer("count"), tbl.integer("total"), tbl.integer("pad_second_one");
     tbl.integer("pad_second_two");
