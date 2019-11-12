@@ -6,12 +6,12 @@ const db = require("../../database/dbConfig");
 //* [METHOD] POST
 //* [ROUTE] /
 //* [DESCRIPTION] To create a new organization.
-//* [TABLE] OrganizationTable
+//* [TABLE] OrgTable
 router.post("/", (req, res) => {
   try {
     db.insert(req.body)
       .returning("*")
-      .into("OrganizationTable")
+      .into("OrgTable")
       .then(data => {
         res.send(data);
       });

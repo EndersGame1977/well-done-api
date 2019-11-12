@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
   try {
     db("PumpTable as pt")
       .join("StatusTable", "StatusTable.pid_sensor", "pt.sensor_pid")
-      .join("SiteTable as st", "st.site_uid", "pt.site_uid")
+      .join("SiteTable as st", "st.uid_site", "pt.site_uid")
       //.join("OrganizationTable as ot, ot.id", "pt.Organization_id")
       .select()
       .then(data => {
@@ -32,7 +32,7 @@ router.get("/:id", (req, res) => {
     db("PumpTable as pt")
       .where({ sensor_pid: req.params.id })
       .join("StatusTable", "StatusTable.pid_sensor", "pt.sensor_pid")
-      .join("SiteTable as st", "st.site_uid", "pt.site_uid")
+      .join("SiteTable as st", "st.uid_site", "pt.site_uid")
       //.join("OrganizationTable as ot, ot.id", "pt.Organization_id")
       .select()
       .returning("*")
@@ -53,7 +53,7 @@ router.get("/:id/date", (req, res) => {
     db("PumpTable as pt")
       .where({ sensor_pid: req.params.id })
       .join("DateTable as dt", "dt.pid_sensor", "pt.sensor_pid")
-      .join("SiteTable as st", "st.site_uid", "pt.site_uid")
+      .join("SiteTable as st", "st.uid_site", "pt.site_uid")
       //.join("OrganizationTable as ot, ot.id", "pt.Organization_id")
       .select()
       .returning("*")
@@ -65,7 +65,10 @@ router.get("/:id/date", (req, res) => {
   }
 });
 
-//* Create pump
+//* [METHOD] POST
+//* [ROUTE] /
+//* [DESCRIPTION] To create a new pump.
+//* [TABLE] PumpTable
 router.post("/", (req, res) => {
   try {
     db.insert(req.body)
@@ -79,11 +82,14 @@ router.post("/", (req, res) => {
   }
 });
 
-//* Update pump
-router.patch("/:sensor_pid", (req, res) => {
+//* [METHOD] PATCH
+//* [ROUTE] /:id
+//* [DESCRIPTION] To modify an existing pump using the sensor_pid.
+//* [TABLE] PumpTable
+router.patch("/:id", (req, res) => {
   try {
     db("PumpTable")
-      .where({ sensor_pid: req.params.sensor_pid })
+      .where({ sensor_pid: req.params.id })
       .update(req.body)
       .returning("*")
       .then(data => {
@@ -94,11 +100,14 @@ router.patch("/:sensor_pid", (req, res) => {
   }
 });
 
-//* Delete pump
-router.delete("/:sensor_pid", (req, res) => {
+//* [METHOD] DELETE
+//* [ROUTE] /:id
+//* [DESCRIPTION] To remove a pump.
+//* [TABLE] PumpTable
+router.delete("/:id", (req, res) => {
   try {
     db("PumpTable")
-      .where({ sensor_pid: req.params.sensor_pid })
+      .where({ sensor_pid: req.params.id })
       .del()
       .then(() => {
         res.json({ success: true });

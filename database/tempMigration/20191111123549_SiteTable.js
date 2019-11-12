@@ -1,6 +1,11 @@
 exports.up = function(knex) {
   return knex.schema.createTable("SiteTable", tbl => {
-    tbl.string("site_uid").primary();
+    tbl.increments("id").primary();
+    tbl
+      .string("uid_site")
+      .references("site_uid")
+      .inTable("PumpTable")
+      .onDelete("cascade");
     tbl.string("village");
     tbl.string("commune");
     tbl.string("district");

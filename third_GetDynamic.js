@@ -1,49 +1,10 @@
 const axios = require("axios");
-const Prismic = require("prismic-javascript");
 const db = require("./database/dbConfig");
-const netlifyURL =
-  "https://dashboard.welldone.org/.netlify/functions/get_momo_status?id=";
-const prismicURL = "https://welldone-dashboard.cdn.prismic.io/api/v2";
-
-// * GET SITE *
-const getSite = async function() {
-  try {
-    const api = await Prismic.getApi(prismicURL);
-    const result = await api.query([
-      Prismic.Predicates.at("document.type", "village")
-    ]);
-    site(result.results);
-  } catch (error) {
-    console.log("ERROR @ GET SITE");
-    console.log({ message: error.message });
-  }
-};
-getSite();
-
-// * GET PUMP *
-const getPump = async function() {
-  try {
-    const api = await Prismic.getApi(prismicURL);
-    const result = await api.query([
-      Prismic.Predicates.at("document.type", "pump")
-    ]);
-    // for (let i = 0; i < result.results.length; i++) {
-    //   const element = result.results[i].uid;
-    //   console.log("Sensor_PID |", element);
-    //   sensor(element); //Provides sensorID to get status
-    // }
-    pump(result.results);
-  } catch (error) {
-    console.log("ERROR @ GET PUMP");
-    console.log({ message: error.message });
-  }
-};
-getPump();
-
-// * GET STATUS *
 const url =
   "https://dashboard.welldone.org/.netlify/functions/get_momo_status?id=";
-async function getStatus(pidsensor) {
+
+// * GET STATUS *
+async function getStatus() {
   const pid_sensor = [
     4724,
     4763,
@@ -89,73 +50,6 @@ async function getStatus(pidsensor) {
 }
 getStatus();
 
-// * SITE SEED *
-const site = function(site) {
-  for (let i = 0; i < site.length; i++) {
-    let SiteSeed = {
-      site_uid: site[i].id,
-      village: site[i].data.village,
-      commune: site[i].data.commune,
-      district: site[i].data.district,
-      province: site[i].data.province
-    };
-    //console.log(SiteSeed);
-    addSiteSeed(SiteSeed);
-  }
-};
-
-// * ADD SITE SEED *
-function addSiteSeed(SiteSeed) {
-  return (
-    db("SiteTable")
-      .insert(SiteSeed)
-      //.returning("id")
-      .then(res => {
-        console.log("AddSiteSeed |", res);
-      })
-      .catch(error => {
-        console.log("ERROR @ ADD SITE SEED");
-        console.log({ message: error.message });
-      })
-  );
-}
-
-// * PUMP SEED *
-const pump = function(pump) {
-  for (let i = 0; i < pump.length; i++) {
-    let PumpSeed = {
-      pump_uid: pump[i].id,
-      sensor_pid: pump[i].uid,
-      site_uid: pump[i].data.village.id,
-      constructed: pump[i].data.finish_construction,
-      depth: pump[i].data.well_depth,
-      yield: pump[i].data.yield,
-      static: pump[i].data.static,
-      level_dynamic: pump[i].data.level_dynamic,
-      latitude: pump[i].data.latitude,
-      longitude: pump[i].data.longitude
-    };
-    //console.log("PumpSeed: ", PumpSeed);
-    addPumpSeed(PumpSeed);
-  }
-};
-
-// * ADD PUMP SEED *
-function addPumpSeed(PumpSeed) {
-  return (
-    db("PumpTable")
-      .insert(PumpSeed)
-      //.returning("id")
-      .then(res => {
-        console.log("AddPumpSeed |", res);
-      })
-      .catch(error => {
-        console.log("ERROR @ ADD PUMP SEED");
-        console.log({ message: error.message });
-      })
-  );
-}
-
 // * STATUS SEED *
 const status = function(response, pid_sensor) {
   //for (let i = 0; i < response.length; i++) {
@@ -192,8 +86,7 @@ function addStatusSeed(StatusSeed) {
         console.log("AddStatusSeed |", res);
       })
       .catch(error => {
-        console.log("ERROR @ ADD STATUS SEED");
-        console.log({ message: error.message });
+        console.log({ addStatusSeed_message: error.message });
       })
   );
 }
@@ -231,8 +124,7 @@ function addDateSeed(DateSeed) {
         console.log("AddDateSeed |", res);
       })
       .catch(error => {
-        console.log("ERROR @ ADD STATUS SEED");
-        console.log({ message: error.message });
+        console.log({ addDateSeed_message: error.message });
       })
   );
 }

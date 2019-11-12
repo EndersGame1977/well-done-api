@@ -1,24 +1,44 @@
-const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
+const cors = require("cors");
+const secrets = require("../config/secrets.js");
 
-const authRouter = require("../router/auth/authRouter");
-const userRouter = require("../router/user/userRouter");
-const pumpRouter = require("../router/pump/PumpRouter");
-const siteRouter = require("../router/site/siteRouter");
-
+console.log("environment:", secrets.environment);
 const server = express();
 
+// import database functions
+
+//const mapData = require("../services/mapData");
+
+//routes
+const authRouter = require("./auth/auth.router");
+const orgRouter = require("./organizations/organizations.router");
+const pumpsRouter = require("./pumps/pumps.router");
+const accountsRouter = require("./accounts/accounts.router");
+const smsNotificationsRouter = require("./sms_notifications/sms_notifications.router");
+const sensorsRouter = require("./sensors/sensors.router");
+const historyRouter = require("./history/history.router");
+const padSecondsRouter = require("./pad_seconds/pad_seconds.router");
+const padCountsRouter = require("./pad_counts/pad_counts.router");
+
+server.use(express.json());
 server.use(helmet());
 server.use(cors());
-server.use(express.json());
+server.use("/api/auth", authRouter);
+server.use("/api/orgs", orgRouter);
+server.use("/api/pumps", pumpsRouter);
+server.use("/api/sensors", sensorsRouter);
+server.use("/api/accounts", accountsRouter);
+server.use("/api/sms_notifications", smsNotificationsRouter);
+server.use("/api/history", historyRouter);
+server.use("/api/pad_counts", padCountsRouter);
+server.use("/api/pad_seconds", padSecondsRouter);
 
-//server.use("/api/", authRouter);
-//server.use("/api/user", userRouter);
-server.use("/api/pump", pumpRouter);
-//server.use("/api/site", siteRouter);
+//update database functions
+//server.use(mapData.getUpdated)
 
 server.get("/", (req, res) => {
-  res.status(200).json({ api: "Fixmylife node api running" });
+  res.status(200).json(`Welcome to the Jungle`);
 });
+
 module.exports = server;

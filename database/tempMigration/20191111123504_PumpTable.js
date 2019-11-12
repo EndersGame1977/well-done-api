@@ -1,8 +1,10 @@
 exports.up = function(knex) {
   return knex.schema.createTable("PumpTable", tbl => {
-    tbl.string("pump_uid").primary();
+    tbl.increments("id").primary();
+    tbl.string("pump_uid");
     tbl.integer("sensor_pid");
     tbl.string("site_uid");
+    tbl.integer("organization_id");
     tbl.date("constructed");
     tbl.integer("depth");
     tbl.integer("yield");
